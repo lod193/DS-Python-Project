@@ -1,0 +1,11 @@
+#Extracting GameStop Stock Data Using yfinance
+
+import yfinance as yf
+
+gamestop = yf.Ticker("GME")
+
+# Get historical market data
+gamestop_history = gamestop.history(period="max")
+
+#print the DataFrame
+print(gamestop_history)
