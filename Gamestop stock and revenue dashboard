@@ -1,0 +1,24 @@
+#Gamestop stock and revenue dashboard
+
+import yfinance as yf
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
+import pandas as pd
+import plotly.express as px
+
+gamestop = yf.Ticker("GME")
+gamestop_history = gamestop.history(period="max")
+
+url = 'https://ir.gamestop.com/financial-information/quarterly-results'
+response = requests.get(url)
+soup = BeautifulSoup(response.content, 'html.parser')
+
+table = pd.read_html(response.text)
+table = table[0]
+
+fig = px.line(gamestop_history, x='Date', y='Close', title='GameStop Stock Data')
+fig.show()
+
+fig = px.bar(table, x='Quarter', y='Total Revenue', title='GameStop Revenue Data')
+fig.show()
