@@ -1,0 +1,18 @@
+#Extracting GameStop Revenue Data Using Webscraping
+
+import requests
+from bs4 import BeautifulSoup
+
+url = 'https://ir.gamestop.com/financial-information/quarterly-results'
+response = requests.get(url)
+
+soup = BeautifulSoup(response.content, 'html.parser')
+table = soup.find('table', {'class': 'table-striped'})
+rows = table.find_all('tr')
+
+for row in rows:
+    cells = row.find_all('td')
+    if cells:
+        if cells[0].text == 'Total Revenue':
+            revenue = cells[1].text
+            print(revenue)
