@@ -1,0 +1,12 @@
+import yfinance as yf
+import plotly.graph_objects as go
+
+def make_graph(stock_name, title):
+    stock = yf.Ticker(stock_name)
+    stock_history = stock.history(period="max")
+    trace = go.Scatter(x=stock_history.index, y=stock_history['Close'], name=stock_name + ' Stock')
+    layout = go.Layout(title=title, xaxis_title='Date', yaxis_title='Closing Price')
+    fig = go.Figure(data=[trace], layout=layout)
+    fig.show()
+
+make_graph("GME", "GameStop Stock Data")
